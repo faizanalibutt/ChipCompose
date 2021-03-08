@@ -43,106 +43,101 @@ import kotlin.math.max
 val topics = listOf(
     "Arts & Crafts", "Beauty", "Books", "Business", "Comics", "Culinary",
     "Design", "Fashion", "Film", "History", "Maths", "Music", "People", "Philosophy",
-    "Religion", "Social sciences", "Technology", "TV", "Writing","Arts & Crafts", "Beauty", "Books", "Business", "Comics", "Culinary",
+    "Religion", "Social sciences", "Technology", "TV", "Writing","Arts & Crafts",
+    "Beauty", "Books", "Business", "Comics", "Culinary",
     "Design", "Fashion", "Film", "History", "Maths", "Music", "People", "Philosophy",
-    "Religion", "Social sciences", "Technology", "TV", "Writing","Arts & Crafts", "Beauty", "Books", "Business", "Comics", "Culinary",
-    "Design", "Fashion", "Film", "History", "Maths", "Music", "People", "Philosophy",
-    "Religion", "Social sciences", "Technology", "TV", "Writing","Arts & Crafts", "Beauty", "Books", "Business", "Comics", "Culinary",
-    "Design", "Fashion", "Film", "History", "Maths", "Music", "People", "Philosophy",
-    "Religion", "Social sciences", "Technology", "TV", "Writing","Arts & Crafts", "Beauty", "Books", "Business", "Comics", "Culinary",
-    "Design", "Fashion", "Film", "History", "Maths", "Music", "People", "Philosophy",
-    "Religion", "Social sciences", "Technology", "TV", "Writing"
+    "Religion", "Social sciences", "Technology", "TV"
 )
 
-//@Composable
-//fun LayoutsCodelab() {
-//    BodyContent()
-//}
-//
-//@Composable
-//fun BodyContent(modifier: Modifier = Modifier) {
-//    Row(modifier = modifier
-//        .background(color = Color.LightGray)
-//        .wrapContentHeight()
-//        .fillMaxWidth()
-//        .horizontalScroll(rememberScrollState()),
-//        content = {
-//            StaggeredGrid {
-//                for (topic in topics) {
-//                    Chip(modifier = modifier.padding(8.dp), text = topic)
-//                }
-//            }
-//        })
-//
-//}
-//
-//@Composable
-//fun StaggeredGrid(
-//    modifier: Modifier = Modifier,
-//    rows: Int = 3,
-//    content: @Composable () -> Unit
-//) {
-//    Layout(
-//        modifier = modifier,
-//        content = content
-//    ) { measurables, constraints ->
-//
-//        val rowWidths = IntArray(rows) { 0 } // Keep track of the width of each row
-//        val rowHeights = IntArray(rows) { 0 } // Keep track of the height of each row
-//        // Don't constrain child views further, measure them with given constraints
-//        val placeables = measurables.mapIndexed { index, measurable ->
-//            val placeable = measurable.measure(constraints)
-//            // Track the width and max height of each row
-//            val row = index % rows
-//            Log.d("Layout", "Row value is: $row Index: $index")
-//            rowWidths[row] += placeable.width
-//            Log.d("Layout", "Row width value is: ${rowWidths[row]}, ${placeable.width}")
-//            rowHeights[row] = max(rowHeights[row], placeable.height)
-//            Log.d("Layout", "Row height value is: ${rowHeights[row]}")
-//            placeable
-//        }
-//
-//        for (value in rowWidths)
-//            Log.d("Layout", "Row Widths Values: $value")
-//
-//        for (value in rowHeights)
-//            Log.d("Layout", "Row Heights Values: $value")
-//
-//        // Grid's width is the widest row
-//        val width = rowWidths.maxOrNull()
-//            ?.coerceIn(constraints.minWidth.rangeTo(constraints.maxWidth)) ?: constraints.minWidth
-//        Log.d("Layout", "total width is: $width\nconstraint width min + max is: ${constraints.minWidth} ${constraints.maxWidth}")
-//
-//        // Grid's height is the sum of the tallest element of each row
-//        // coerced to the height constraints
-//        val height = rowHeights.sumBy { it }
-//            .coerceIn(constraints.minHeight.rangeTo(constraints.maxHeight))
-//        Log.d("Layout", "$height")
-//
-//        // Y of each row, based on the height accumulation of previous rows
-//        val rowY = IntArray(rows) { 0 }
-//        for (i in 1 until rows) {
-//            rowY[i] = rowY[i - 1] + rowHeights[i - 1]
-//            Log.d("Layout", "Y of each Row: ${rowY[i]}")
-//        }
-//
-//        // Set the size of the parent layout
-//        layout(width, height) {
-//            // x co-ord we have placed up to, per row
-//            val rowX = IntArray(rows) { 0 }
-//
-//            placeables.forEachIndexed { index, placeable ->
-//                val row = index % rows
-//                placeable.placeRelative(
-//                    x = rowX[row],
-//                    y = rowY[row]
-//                )
-//                rowX[row] += placeable.width
-//                Log.d("Layout", "X position of each element: ${rowX[row]}")
-//            }
-//        }
-//    }
-//}
+@Composable
+fun LayoutsCodelab() {
+    BodyContent()
+}
+
+@Composable
+fun BodyContent(modifier: Modifier = Modifier) {
+    Row(modifier = modifier
+        .background(color = Color.LightGray)
+        .wrapContentHeight()
+        .fillMaxWidth()
+        .horizontalScroll(rememberScrollState()),
+        content = {
+            StaggeredGrid {
+                for (topic in topics) {
+                    Chip(modifier = modifier.padding(8.dp), text = topic)
+                }
+            }
+        })
+
+}
+
+@Composable
+fun StaggeredGrid(
+    modifier: Modifier = Modifier,
+    rows: Int = 3,
+    content: @Composable () -> Unit
+) {
+    Layout(
+        modifier = modifier,
+        content = content
+    ) { measurables, constraints ->
+
+        val rowWidths = IntArray(rows) { 0 } // Keep track of the width of each row
+        val rowHeights = IntArray(rows) { 0 } // Keep track of the height of each row
+        // Don't constrain child views further, measure them with given constraints
+        val placeables = measurables.mapIndexed { index, measurable ->
+            val placeable = measurable.measure(constraints)
+            // Track the width and max height of each row
+            val row = index % rows
+            Log.d("Layout", "Row value is: $row Index: $index")
+            rowWidths[row] += placeable.width
+            Log.d("Layout", "Row width value is: ${rowWidths[row]}, ${placeable.width}")
+            rowHeights[row] = max(rowHeights[row], placeable.height)
+            Log.d("Layout", "Row height value is: ${rowHeights[row]}")
+            placeable
+        }
+
+        for (value in rowWidths)
+            Log.d("Layout", "Row Widths Values: $value")
+
+        for (value in rowHeights)
+            Log.d("Layout", "Row Heights Values: $value")
+
+        // Grid's width is the widest row
+        val width = rowWidths.maxOrNull()
+            ?.coerceIn(constraints.minWidth.rangeTo(constraints.maxWidth)) ?: constraints.minWidth
+        Log.d("Layout", "total width is: $width\nconstraint width min + max is: ${constraints.minWidth} ${constraints.maxWidth}")
+
+        // Grid's height is the sum of the tallest element of each row
+        // coerced to the height constraints
+        val height = rowHeights.sumBy { it }
+            .coerceIn(constraints.minHeight.rangeTo(constraints.maxHeight))
+        Log.d("Layout", "$height")
+
+        // Y of each row, based on the height accumulation of previous rows
+        val rowY = IntArray(rows) { 0 }
+        for (i in 1 until rows) {
+            rowY[i] = rowY[i - 1] + rowHeights[i - 1]
+            Log.d("Layout", "Y of each Row: ${rowY[i]}")
+        }
+
+        // Set the size of the parent layout
+        layout(width, height) {
+            // x co-ord we have placed up to, per row
+            val rowX = IntArray(rows) { 0 }
+
+            placeables.forEachIndexed { index, placeable ->
+                val row = index % rows
+                placeable.placeRelative(
+                    x = rowX[row],
+                    y = rowY[row]
+                )
+                rowX[row] += placeable.width
+                Log.d("Layout", "X position of each element: ${rowX[row]}")
+            }
+        }
+    }
+}
 
 @Suppress("DEPRECATION")
 @ExperimentalLayout
@@ -161,7 +156,7 @@ fun FlowLayout() {
             mainAxisSize = SizeMode.Expand,
             content = {
                 for (topic in topics) {
-                    Chip(modifier = Modifier.padding(4.dp), text = topic)
+                    Chip(modifier = Modifier.padding(8.dp), text = topic)
                 }
             })
     }

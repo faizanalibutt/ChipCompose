@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ChipComposeTheme {
-                ChipGroup().CustomChipGroup()
+                LayoutsCodelab()
             }
         }
     }
